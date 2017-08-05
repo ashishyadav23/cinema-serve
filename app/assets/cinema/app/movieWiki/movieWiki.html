@@ -1,0 +1,160 @@
+<style>
+    div #backgroundImage {
+        background-image:url(https://image.tmdb.org/t/p/w640/{{vm.selectedMovie.poster_path}});
+    }
+    
+    md-divider {
+        margin-top: 5px;
+    }
+    
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+    }
+    
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    #bio {
+        padding: 15px;
+        overflow-wrap: break-word;
+        overflow: scroll;
+    }
+</style>
+<div layout="vertical" layout-fill>
+    <div id="backgroundImage"></div>
+    <md-content flex class="gradient">
+        <!--<md-card flex ng-style="{'background-image':'url(https://image.tmdb.org/t/p/w640/{{vm.selectedMovie.poster_path}})'}">-->
+        <md-card flex>
+            <md-card-content id="video">
+                <div layout="column">
+                    <md-card>
+                        <div class="video-container" ng-if="vm.videoUrl!=''">
+                            <iframe src="{{vm.videoUrl}}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <img ng-if="vm.videoUrl==''" style="width:100%;height:200px;" class="md-card-image" ng-src="https://image.tmdb.org/t/p/w640/{{vm.selectedMovie.poster_path}}"
+                            class="md-avatar" aria-label="{{vm.selectedMovie.original_title}}" alt="{{vm.selectedMovie.original_title}}"
+                        />
+                        <img ng-if="vm.videoUrl==''&& vm.selectedMovie.poster_path=='null' || vm.selectedMovie.poster_path=='' || vm.selectedMovie.poster_path=='undefined' "
+                            class="md-card-image placeholder" class="md-avatar" aria-label="{{vm.selectedMovie.title}}" />
+                    </md-card>
+                </div>
+                <div style="text-align: center;margin-top: 10px;text-transform: uppercase;color:#000;">
+                    <span>{{vm.selectedMovie.title}}</span>
+                </div>
+            </md-card-content>
+        </md-card>
+
+        <md-content>
+            <md-tabs md-dynamic-height="true" md-border-bottom="true" md-stretch-tabs="always">
+                <md-tab label="Synopsis">
+                    <md-content class="md-padding" id="bio">
+                        <div layout="column">
+                            <span flex style="text-align: justify">{{vm.selectedMovie.overview}}</span>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Details">
+                    <md-content class="md-padding">
+                        <md-card>
+                            <md-card-content>
+                                <div layout="row" flex ng-if="vm.selectedMovie.vote_average">
+                                    <span flex="30">Rating</span>
+                                    <div flex="70" style="text-align:center;">
+                                        <i flex="10" style="font-size:20px; color:orange;" class="material-icons">star_rate</i>
+                                        <span flex="60" style="text-align: center">{{vm.selectedMovie.vote_average}}/10</span>
+                                    </div>
+                                </div>
+                                <md-divider></md-divider>
+                                <div layout="row" flex>
+                                    <span flex="30">Release date</span>
+                                    <span flex="70" style="text-align:center;">{{vm.selectedMovie.release_date}}</span>
+                                </div>
+                                <div layout="row" flex>
+                                    <span flex="30">Running time</span>
+                                    <span flex="70" style="text-align:center;">{{vm.movieDetails.runtime}}</span>
+                                </div>
+                                <md-divider></md-divider>
+                                <div layout="row" flex>
+                                    <span flex="30">Directed by</span>
+                                    <span flex="70" style="text-align:center;">{{vm.selectedMovie.release_date}}</span>
+                                </div>
+                                <md-divider></md-divider>
+                                <div layout="row" flex>
+                                    <span flex="30">Genres</span>
+                                    <div flex="70" style="text-align:center;" ng-repeat=" genre in vm.movieDetails.genres">
+                                        <a ng-click="vm.openGenre(genre)" flex="65" style="text-align: justify" md-no-ink class="md-primary">{{genre.name}}</a>
+                                        <span flex="5" ng-if="!$last">,</span>
+                                    </div>
+                                </div>
+                            </md-card-content>
+                        </md-card>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+
+
+        <md-card>
+            <md-card-header ng-if="vm.castList.length>0">
+                <md-card-header-text>
+                    <span class="md-title">Co-actors</span>
+                </md-card-header-text>
+            </md-card-header>
+
+            <md-card-content>
+                <ks-swiper-container swiper="swiper" on-ready="vm.onReadySwiper(swiper)" initial-slide="0" loop="false" show-nav-buttons="false"
+                    slides-per-view="3" space-between="5" pagination-clickable="false">
+                    <ks-swiper-slide class="swiper-slide" ng-repeat="cast in vm.castList" ng-click="vm.openArtistWiki(cast)">
+                        <div layout="column">
+                            <div>
+                                <img style="width:100%;height:200px;" class="md-card-image" ng-src="https://image.tmdb.org/t/p/w640/{{cast.profile_path}}"
+                                    class="md-avatar" aria-label="{{cast.original_title}}" alt="{{cast.original_title}}" />
+                            </div>
+                            <div style="text-align:center;">
+                                <span>{{cast.name}}</span>
+                            </div>
+                        </div>
+                    </ks-swiper-slide>
+                </ks-swiper-container>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-card-header ng-if="vm.similarMoviesList.list.length>0">
+                <md-card-header-text>
+                    <span class="md-title">Similar movies</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div class="background" ng-if="vm.similarMoviesList ==''"></div>
+                <cinema-Swiper data="vm.similarMoviesList" events="vm.similarMoviesListSwiper" swiper-click="vm.viewSelectedMovie(data);">
+                </cinema-Swiper>
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-card-header ng-if="vm.recommendMoviesList.list.length>0">
+                <md-card-header-text>
+                    <span class="md-title">Recommended movies</span>
+                </md-card-header-text>
+            </md-card-header>
+
+            <md-card-content>
+                <div class="background" ng-if="vm.recommendMoviesList ==''"></div>
+                <cinema-Swiper data="vm.recommendMoviesList" events="vm.recommendMoviesListSwiper" swiper-click="vm.viewSelectedMovie(data);">
+                </cinema-Swiper>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>

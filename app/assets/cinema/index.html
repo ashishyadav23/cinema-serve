@@ -1,0 +1,159 @@
+<!doctype html>
+<html ng-app="cinema">
+
+<head>
+  <meta charset="utf-8">
+  <title>cinema</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+  <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+  <link rel="stylesheet" href="bower_components/swiper/dist/css/swiper.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css({.tmp/serve,src}) styles/app.css -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="app/index.css">
+  <link rel="stylesheet" href="app/cinemaDirective/carousel/cinemaSwiper.css">
+  <link rel="stylesheet" href="app/components/malarkey/malarkey.css">
+  <link rel="stylesheet" href="app/components/navbar/navbar.css">
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+<style>
+  @font-face {
+    font-family: 'Zurichbt';
+    font-style: normal;
+    font-weight: 400;
+    src: url(assets/fonts/zurich/zurich-bt.ttf) format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'ZurichbtCondensed';
+    font-style: normal;
+    font-weight: 400;
+    src: url(assets/fonts/zurich/Zurich__Condensed_BT.ttf) format('truetype');
+  }
+</style>
+
+<body>
+  <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  <div layout="row" ng-cloak flex ng-controller="IndexController as vm">
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+
+      <md-toolbar style="background-color:#00bcd4">
+        <div>
+          <p>Cinema</p>
+        </div>
+
+      </md-toolbar>
+      <md-content>
+        <md-list>
+          <md-list-item ng-repeat=" item in vm.drawerList" ng-click="vm.onDrawerItemClick(item.id)" ng-class="{'selectedColor':item.isSelected}"
+            ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+            <div layout="row" flex>
+              <div flex="20">
+                <i class="material-icons">{{item.image}}</i>
+              </div>
+              <div flex="80">
+                <span ng-bind="item.name"></span>
+              </div>
+
+            </div>
+          </md-list-item>
+        </md-list>
+
+      </md-content>
+
+    </md-sidenav>
+  </div>
+
+  <div layout="column" layout-fill>
+    <md-toolbar class="md-hue-3" style="background-color: #00bcd4;" ng-controller="IndexController as vm" ng-if="showToolbar">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+          <i ng-if="direction==0" class="material-icons" style="color:#fff;" ng-click="vm.factory.openDrawer();">menu</i>
+          <i ng-if="direction==1" class="material-icons" style="color: #fff;font-size: 30px;margin: -2px;margin-left: -5px;" ng-click="vm.factory.previousPage();">keyboard_arrow_left</i>
+        </md-button>
+        <h2>
+          <span style="color:white;">{{headerTitle}}</span>
+        </h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+
+    <md-content layout="row" flex style="height: 100%">
+      <div class="content" ng-view flex></div>
+    </md-content>
+
+  </div>
+
+
+  <!-- build:js(src) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+  <script src="bower_components/malarkey/dist/malarkey.min.js"></script>
+  <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/swiper/dist/js/swiper.js"></script>
+  <script src="bower_components/angular-swiper/dist/angular-swiper.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+  <!-- inject:js -->
+  <script src="app/tvShowsWiki/seasonEpisode/episode.controller.js"></script>
+  <script src="app/index.module.js"></script>
+  <script src="app/genres/genre/genre.controller.js"></script>
+  <script src="app/components/webDevTec/webDevTec.service.js"></script>
+  <script src="app/components/navbar/navbar.directive.js"></script>
+  <script src="app/components/malarkey/malarkey.directive.js"></script>
+  <script src="app/components/githubContributor/githubContributor.service.js"></script>
+  <script src="app/cinemaDirective/carousel/cinema.directive.js"></script>
+  <script src="app/tvshows/tvshows.controller.js"></script>
+  <script src="app/tvShowsWiki/tvShowsWiki.route.js"></script>
+  <script src="app/tvShowsWiki/tvShowsWiki.controller.js"></script>
+  <script src="app/tvShowsWiki/tvShowService.js"></script>
+  <script src="app/tmdb/angular-tmdb.js"></script>
+  <script src="app/seeAllList/seeAllList.controller.js"></script>
+  <script src="app/main/main.service.js"></script>
+  <script src="app/main/main.route.js"></script>
+  <script src="app/main/main.controller.js"></script>
+  <script src="app/movieWiki/movieWiki.controller.js"></script>
+  <script src="app/landing/landing.controller.js"></script>
+  <script src="app/factory/app.factories.js"></script>
+  <script src="app/artist/artist.service.js"></script>
+  <script src="app/artist/artist.route.js"></script>
+  <script src="app/artist/artist.controller.js"></script>
+  <script src="app/AllTvshows/allTvshows.controller.js"></script>
+  <script src="app/AllMovies/allMovies.controller.js"></script>
+  <script src="app/index.services.js"></script>
+  <script src="app/index.run.js"></script>
+  <script src="app/index.route.js"></script>
+  <script src="app/index.constants.js"></script>
+  <script src="app/index.config.js"></script>
+  <script src="app/app.controller.js"></script>
+  <!-- endinject -->
+
+  <!-- inject:partials -->
+  <!-- angular templates will be automatically converted in js and inserted here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
+</body>
+
+</html>

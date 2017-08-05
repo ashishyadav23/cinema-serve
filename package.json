@@ -1,0 +1,20 @@
+{
+  "name": "cinema",
+  "version": "0.0.1",
+  "description": "",
+  "engines": {
+    "node": "6.11.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "4.13.3"
+  },
+  "repository": {},
+  "keywords": [],
+  "license": "MIT",
+  "devDependencies": {}
+}
