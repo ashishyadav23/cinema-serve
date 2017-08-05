@@ -57,7 +57,7 @@
         function getTvShowWikiFromMaze(query) {
             var deferred = $q.defer();
             // http://api.tvmaze.com/search/shows?q=game%20of%20thrones
-            var url = 'http://api.tvmaze.com/singlesearch/shows?embed=episodes&q=' + query;
+            var url = 'https://api.tvmaze.com/singlesearch/shows?embed=episodes&q=' + query;
             $http.get(url).then(function (success) {
                 deferred.resolve(success);
             }, function (error) {
