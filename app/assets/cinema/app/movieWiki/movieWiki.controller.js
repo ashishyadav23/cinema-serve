@@ -204,7 +204,8 @@
 
         function openMovieWiki(response) {
             CinemaService.collection.setSelectedMovie(response);
-            $route.reload();
+            $location.path('/movieWiki/' + response.id);
+
         }
 
 
