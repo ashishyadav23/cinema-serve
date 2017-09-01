@@ -6,7 +6,7 @@
         .controller('MovieWikiController', MovieWikiController);
 
     /** @ngInject */
-    function MovieWikiController(tmdbMovie, CinemaService, $scope, $rootScope, $timeout, $filter, $sce, $location, ArtistService, $routeParams) {
+    function MovieWikiController(tmdbMovie, CinemaService, $scope, $rootScope, $timeout, $filter, $sce, $location, ArtistService, $routeParams, $route) {
         var vm = this;
         var param = {
             "language": "en-US",
@@ -71,7 +71,15 @@
             getSimilarMovies();
             getRecommendedMovies();
         }
-
+        
+        vm.timeConvert = function (n) {
+            var num = n;
+            var hours = (num / 60);
+            var rhours = Math.floor(hours);
+            var minutes = (hours - rhours) * 60;
+            var rminutes = Math.round(minutes);
+            return rhours + " hour(s) and " + rminutes + " minute(s).";
+        }
 
         function getSimilarMovies() {
             tmdbMovie.similar(vm.selectedMovie.id, param,
@@ -205,7 +213,7 @@
         function openMovieWiki(response) {
             CinemaService.collection.setSelectedMovie(response);
             $location.path('/movieWiki/' + response.id);
-
+            // $route.reload();
         }
 
 
