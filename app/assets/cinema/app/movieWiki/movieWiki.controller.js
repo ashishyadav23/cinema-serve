@@ -49,7 +49,6 @@
                 CinemaService.collection.setSelectedMovie(success);
                 $scope.$broadcast('refresh', success);
             }, function errorCallback() {
-                App
             });
         }
         function clearData() {
@@ -71,7 +70,7 @@
             getSimilarMovies();
             getRecommendedMovies();
         }
-        
+
         vm.timeConvert = function (n) {
             var num = n;
             var hours = (num / 60);
@@ -220,7 +219,7 @@
         function openArtistWiki(artist) {
             console.log("Artist", angular.toJson(artist));
             ArtistService.setSelectedArtist(artist);
-            $location.path('/artist');
+            $location.path('/artist/' + artist.id);
         }
 
 

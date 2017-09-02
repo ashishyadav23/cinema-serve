@@ -23,31 +23,39 @@
         init();
         function init() {
 
-            if (!CinemaService.collection.currentNavItem) {
-                $scope.$broadcast('refresh', $routeParams.key);
-
+            if (CinemaService.collection.currentNavItem == "") {
+                CinemaService.collection.currentNavItem = $routeParams.key;
+                init();
             } else {
                 /**TV shows  */
 
                 vm.popularTvShows = {
                     "page": "",
                     "totalPage": "",
-                    "list": []
+                    "list": [],
+                    "sortBy": ['-vote_average', 'vote_count']
+
                 };
                 vm.ontheAirShows = {
                     "page": "",
                     "totalPage": "",
-                    "list": []
+                    "list": [],
+                    "sortBy": []
+
                 };
                 vm.arrivingShows = {
                     "page": "",
                     "totalPage": "",
-                    "list": []
+                    "list": [],
+                    "sortBy": []
+
                 };
                 vm.topRatedShows = {
                     "page": "",
                     "totalPage": "",
-                    "list": []
+                    "list": [],
+                    "sortBy": ['-vote_average']
+
                 };
                 vm.currentNavItem = CinemaService.collection.currentNavItem;
                 vm.navbarClick = navbarClick;
@@ -80,11 +88,6 @@
             }
 
         }
-
-        $scope.$on('refresh', function (data) {
-            CinemaService.collection.currentNavItem = data;
-            init();
-        })
 
         function loadAllShowsData() {
             getpopularTv();
@@ -157,7 +160,7 @@
             CinemaService.collection.selectedSeeAllType = 1;
             CinemaService.collection.setSeeAllTvShows(dataList);
             $rootScope.headerTitle = headerTitle;
-            $location.path('/seeAllList/' + params+"/"+1);
+            $location.path('/seeAllList/' + params + "/" + 1);
 
         }
         function setterData(request, response) {

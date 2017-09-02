@@ -3,42 +3,74 @@
     angular.module('cinema')
         .controller('ArtistController', ArtistController);
     /** @ngInject */
-    function ArtistController(tmdbTV, CinemaService, $location, $rootScope, $sce, $filter, ArtistService, tmdbMovie) {
+    function ArtistController(tmdbTV, CinemaService, $location, $rootScope, $sce, $filter, ArtistService, tmdbMovie, $scope, $routeParams) {
         var vm = this;
         var param = {
             "language": "en-US",
             "page": 1,
             "with_people": 0
         };
+        var pageCount = {
+            "artistMoviesStatus": false
+        }
         init();
 
         function init() {
-            vm.artistBio = "";
-            vm.artistMovies = [];
-            vm.selectedArtist = ArtistService.getSelectedArtist();
-            console.log("SelectedArtist", vm.selectedArtist);
+            if (!ArtistService.selectedArtist) {
+                getArtistDetailsById($routeParams.id);
+            } else {
+                vm.artistBio = "";
 
-            if (angular.isDefined(vm.selectedArtist)) {
-                loadData();
+                vm.artistMovies = {
+                    "page": "",
+                    "list": [],
+                    "totalPage": "",
+                    "sortBy": []
+                };
+                vm.selectedArtist = ArtistService.getSelectedArtist();
+                $rootScope.headerTitle = vm.selectedArtist.name;
+                $rootScope.direction = 1;
+                console.log("SelectedArtist", vm.selectedArtist);
+                if (angular.isDefined(vm.selectedArtist)) {
+                    loadData();
+                }
             }
+        }
+
+        $scope.$on('refresh', function ($event, data) {
+            init();
+        });
+
+        function getArtistDetailsById(id) {
+            tmdbMovie.getArtistById(id, param, function successCallback(success) {
+                ArtistService.setSelectedArtist(success);
+                $scope.$broadcast('refresh', success);
+            }, function errorCallback() {
+            });
         }
 
         vm.artistMoviesSwiper = function (swiper) {
             swiper.initObservers();
             swiper.on('onReachEnd', function () {
-                param.page++;
-                getmovies();
+                if (vm.artistMovies.page < vm.artistMovies.totalPage && pageCount.artistMoviesStatus) {
+                    pageCount.artistMoviesStatus = false;
+                    param.page = angular.copy(vm.artistMovies.page) + 1;
+                    getmovies();
+                }
             });
         };
 
         function loadData() {
             getmovies();
-            getTvShows();
+            // getTvShows();
             getBio();
         }
 
-        function getArtistDetailsById(id) {
-
+        function setterData(request, response) {
+            request.page = response.page;
+            request.totalPage = response.total_pages;
+            request.list = request.list.concat(response.results);
+            return request;
         }
 
         function getmovies() {
@@ -47,7 +79,9 @@
                 function success(success) {
                     if (success.hasOwnProperty('results')) {
                         if (success.results.length > 0) {
-                            vm.artistMovies = vm.artistMovies.concat(success.results);
+                            pageCount.artistMoviesStatus = true;
+                            vm.artistMovies = setterData(vm.artistMovies, success);
+                            vm.artistMovies.sortBy.push('-vote_average');
                         }
                     }
                 },
@@ -78,7 +112,7 @@
                     diffInYear = (currentDt.getFullYear() - dob.getFullYear());
                 }
             }
-            return diffInYear;
+            return diffInYear; pageCount.artistMoviesStatus
         }
 
         function getBio() {
@@ -100,4 +134,4 @@
         }
 
     }
-})()
+})();

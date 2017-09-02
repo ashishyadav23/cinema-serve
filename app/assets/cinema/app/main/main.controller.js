@@ -30,22 +30,26 @@
       vm.popularMovies = {
         "page": "",
         "totalPage": "",
-        "list": []
+        "list": [],
+        "sortBy": ['-vote_average']
       };
       vm.nowPlayingMovies = {
         "page": "",
         "totalPage": "",
-        "list": []
+        "list": [],
+        "sortBy": ['-vote_count','-release_date']
       };
       vm.upComingMovies = {
         "page": "",
         "totalPage": "",
-        "list": []
+        "list": [],
+        "sortBy": ['-release_date','-vote_count']
       };
       vm.topRatedMovies = {
         "page": "",
         "totalPage": "",
-        "list": []
+        "list": [],
+        "sortBy": ['-vote_average','-release_date']
       };
 
       vm.selectedType = "";

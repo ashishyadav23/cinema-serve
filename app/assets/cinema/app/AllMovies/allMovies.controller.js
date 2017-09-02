@@ -20,10 +20,17 @@
         init();
 
         function init() {
-            vm.searchQuery = "";
-            $rootScope.headertitle = "Movies";
-            vm.searchClicked = searchClicked;
-            vm.searchOnChange = searchOnChange;
+            if ($rootScope.headerTitle != "Movies") {
+                $rootScope.headerTitle = "Movies";
+                $rootScope.direction = 0;
+                init();
+            } else {
+                vm.searchQuery = "";
+                $rootScope.headerTitle = "Movies";
+                vm.searchClicked = searchClicked;
+                vm.searchOnChange = searchOnChange;
+            }
+
         }
 
         function searchClicked() {

@@ -11,7 +11,7 @@
             md-cols="3" ng-if="vm.type==1">
             <md-grid-tile ng-repeat="tv in vm.seeAllList.list | filter:vm.searchQuery | orderBy:'-vote_average' track by tv.id+tv.poster_path "
                 id="view">
-                <md-card style="width:100%;" ng-click="vm.openTvWiki(tv)">`
+                <md-card style="width:100%;" ng-click="vm.openTvWiki(tv)">
                     <div ng-if="tv.poster_path!=null && tv.poster_path!='' && tv.poster_path!=undefined">
                         <img class="background" style="width:100%;height:100%;" ng-src="https://image.tmdb.org/t/p/w640/{{tv.poster_path}}" class="md-card-image md-avatar"
                             aria-label="{{tv.name}}">

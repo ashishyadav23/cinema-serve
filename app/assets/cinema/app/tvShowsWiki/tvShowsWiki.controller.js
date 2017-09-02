@@ -32,7 +32,7 @@
                     swiper.initObservers();
                 }
                 vm.selectedTv = CinemaService.collection.selectedTv;
-                $rootScope.headerTitle = vm.selectedTv.original_name;
+                $rootScope.headerTitle = vm.selectedTv.name;
                 loadVm();
             }
 
@@ -170,7 +170,7 @@
             $timeout(function () {
                 clearList();
                 vm.selectedTv = data;
-                $rootScope.headerTitle = vm.selectedTv.original_name;
+                $rootScope.headerTitle = vm.selectedTv.name;
                 CinemaService.collection.setSelectedTv(data);
                 loadTvShowsDetails();                // $route.reload();
             }, 100);
@@ -240,7 +240,7 @@
         function openArtistWiki(artist) {
             console.log("artist", artist);
             ArtistService.setSelectedArtist(artist);
-            $location.path('/artist');
+            $location.path('/artist/' + artist.id);
         }
 
     }
