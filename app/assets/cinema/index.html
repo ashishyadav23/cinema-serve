@@ -48,18 +48,12 @@
     <![endif]-->
   <div layout="row" ng-cloak flex ng-controller="IndexController as vm">
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4">
+
       <md-toolbar style="background-color:#00bcd4">
-        <div layout="row" style="height: 120px;">
-          <!--<img style="max-width: 75px;max-height: 75px;border-radius: 50%;" src="assets/images/movieGrid.jpg" alt="">-->
-
-          <div flex="30">
-            <div style="margin-top: 25px;text-align: center;">
-              <img style="width: 75px;height: 75px;border-radius: 50%;" src="assets/images/movieGrid.jpg" alt="">
-            </div>
-          </div>
-          <div flex="70" style="text-align: start;margin-top: 35px;">Mr.Nobody</div>
-
+        <div>
+          <p>Cinema</p>
         </div>
+
       </md-toolbar>
       <md-content>
         <md-list>
@@ -70,13 +64,15 @@
                 <i class="material-icons">{{item.image}}</i>
               </div>
               <div flex="80">
-                <div style="margin-top: -5px;" ng-bind="item.name"></div>
+                <span ng-bind="item.name"></span>
               </div>
+
             </div>
-            <md-divider ng-if="!$last"></md-divider>
           </md-list-item>
         </md-list>
+
       </md-content>
+
     </md-sidenav>
   </div>
 
@@ -126,19 +122,19 @@
   <script src="app/components/webDevTec/webDevTec.service.js"></script>
   <script src="app/components/navbar/navbar.directive.js"></script>
   <script src="app/components/malarkey/malarkey.directive.js"></script>
-  <script src="app/components/githubContributor/githubContributor.service.js"></script>
   <script src="app/cinemaDirective/carousel/cinema.directive.js"></script>
+  <script src="app/components/githubContributor/githubContributor.service.js"></script>
   <script src="app/tvshows/tvshows.controller.js"></script>
   <script src="app/tvShowsWiki/tvShowsWiki.route.js"></script>
   <script src="app/tvShowsWiki/tvShowsWiki.controller.js"></script>
   <script src="app/tvShowsWiki/tvShowService.js"></script>
   <script src="app/tmdb/angular-tmdb.js"></script>
   <script src="app/seeAllList/seeAllList.controller.js"></script>
+  <script src="app/landing/landing.controller.js"></script>
   <script src="app/movieWiki/movieWiki.controller.js"></script>
   <script src="app/main/main.service.js"></script>
   <script src="app/main/main.route.js"></script>
   <script src="app/main/main.controller.js"></script>
-  <script src="app/landing/landing.controller.js"></script>
   <script src="app/factory/app.factories.js"></script>
   <script src="app/artist/artist.service.js"></script>
   <script src="app/artist/artist.route.js"></script>

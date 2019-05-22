@@ -343,6 +343,7 @@ angular.module('tmdb', [])
                         onError(data, status, headers, config);
                 });
         }
+
         this.setup = function (apiKey, useSSL) {
             TMDB.API_KEY = apiKey;
             if (useSSL) {

@@ -22,12 +22,11 @@
             $rootScope.direction = 1;
             vm.openMovieWiki = openMovieWiki;
             vm.openTvWiki = openTvWiki;
-            if (CinemaService.collection.seeAllMovies == "" && CinemaService.collection.seeAllTvShows == "") {
+            if (CinemaService.collection.seeAllMovies == "" && CinemaService.collection.seeAllTvShows=="") {
                 vm.seeAllList = {
                     "page": "",
                     "list": [],
-                    "totalPage": "",
-                    "sortBy": []
+                    "totalPage": ""
                 }
                 callWhenPageRefresh();
 
@@ -114,7 +113,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-vote_average');
                             }
                         }
                     }
@@ -132,7 +130,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-vote_average', '-release_date');
                             }
                         }
                     }
@@ -149,7 +146,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-release_date', '-vote_count');
                             }
                         }
                     }
@@ -166,7 +162,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-vote_count', '-release_date');
                             }
                         }
                     }
@@ -183,7 +178,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-vote_average');
                             }
                         }
                     }
@@ -201,7 +195,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-                                vm.seeAllList.sortBy.push('-vote_average', '-first_air_date');
                             }
                         }
                     }
@@ -219,7 +212,6 @@
                                 reinit(typeStatus, success);
                             } else {
                                 vm.seeAllList = setterData(vm.seeAllList, success);
-
                             }
                         }
                     }
@@ -228,7 +220,7 @@
                 });
         }
 
-        function getArrivingShows(typeStatus) {
+        function getArrivingShowss(typeStatus) {
             tmdbTV.tv.onAirToday(param,
                 function success(success) {
                     if (success.hasOwnProperty('results')) {

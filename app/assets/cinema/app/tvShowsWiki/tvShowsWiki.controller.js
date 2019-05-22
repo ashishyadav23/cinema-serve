@@ -32,7 +32,7 @@
                     swiper.initObservers();
                 }
                 vm.selectedTv = CinemaService.collection.selectedTv;
-                $rootScope.headerTitle = vm.selectedTv.name;
+                $rootScope.headerTitle = vm.selectedTv.original_name;
                 loadVm();
             }
 
@@ -170,7 +170,7 @@
             $timeout(function () {
                 clearList();
                 vm.selectedTv = data;
-                $rootScope.headerTitle = vm.selectedTv.name;
+                $rootScope.headerTitle = vm.selectedTv.original_name;
                 CinemaService.collection.setSelectedTv(data);
                 loadTvShowsDetails();                // $route.reload();
             }, 100);

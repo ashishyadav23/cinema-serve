@@ -115,13 +115,7 @@
 
     .md-button.md-default-theme.md-accent,
     .md-button.md-accent {
-        color: rgb(4, 227, 255);
-        font-weight: bold;
-    }
-
-    .md-button._md-nav-button.md-unselected {
-        color: rgba(0, 0, 0, 0.54);
-        font-weight: 100;
+        color: #000000;
     }
 
     md-card md-card-title {

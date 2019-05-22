@@ -10,9 +10,6 @@
             "page": 1,
             "with_people": 0
         };
-        var pageCount = {
-            "artistMoviesStatus": false
-        }
         init();
 
         function init() {
@@ -20,16 +17,12 @@
                 getArtistDetailsById($routeParams.id);
             } else {
                 vm.artistBio = "";
-
                 vm.artistMovies = {
                     "page": "",
                     "list": [],
-                    "totalPage": "",
-                    "sortBy": []
+                    "totalPage": ""
                 };
                 vm.selectedArtist = ArtistService.getSelectedArtist();
-                $rootScope.headerTitle = vm.selectedArtist.name;
-                $rootScope.direction = 1;
                 console.log("SelectedArtist", vm.selectedArtist);
                 if (angular.isDefined(vm.selectedArtist)) {
                     loadData();
@@ -52,25 +45,15 @@
         vm.artistMoviesSwiper = function (swiper) {
             swiper.initObservers();
             swiper.on('onReachEnd', function () {
-                if (vm.artistMovies.page < vm.artistMovies.totalPage && pageCount.artistMoviesStatus) {
-                    pageCount.artistMoviesStatus = false;
-                    param.page = angular.copy(vm.artistMovies.page) + 1;
-                    getmovies();
-                }
+                param.page++;
+                getmovies();
             });
         };
 
         function loadData() {
             getmovies();
-            // getTvShows();
+            getTvShows();
             getBio();
-        }
-
-        function setterData(request, response) {
-            request.page = response.page;
-            request.totalPage = response.total_pages;
-            request.list = request.list.concat(response.results);
-            return request;
         }
 
         function getmovies() {
@@ -79,9 +62,7 @@
                 function success(success) {
                     if (success.hasOwnProperty('results')) {
                         if (success.results.length > 0) {
-                            pageCount.artistMoviesStatus = true;
-                            vm.artistMovies = setterData(vm.artistMovies, success);
-                            vm.artistMovies.sortBy.push('-vote_average');
+                            vm.artistMovies = vm.artistMovies.concat(success.results);
                         }
                     }
                 },
@@ -112,7 +93,7 @@
                     diffInYear = (currentDt.getFullYear() - dob.getFullYear());
                 }
             }
-            return diffInYear; pageCount.artistMoviesStatus
+            return diffInYear;
         }
 
         function getBio() {
@@ -134,4 +115,4 @@
         }
 
     }
-})();
+})()
